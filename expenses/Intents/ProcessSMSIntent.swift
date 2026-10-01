@@ -7,6 +7,7 @@
 
 import AppIntents
 import Foundation
+import SwiftData
 
 /// App Intent для обработки входящих SMS сообщений
 struct ProcessSMSIntent: AppIntent {
@@ -22,6 +23,10 @@ struct ProcessSMSIntent: AppIntent {
     
     // Основная функция выполнения Intent
     func perform() async throws -> some IntentResult & ProvidesDialog {
+        // Создаем ModelContainer для Swift Data
+        let container = try ModelContainer(for: SMSMessage.self)
+        let context = ModelContext(container)
+        
         // Создаем новое сообщение
         let message = SMSMessage(
             text: smsText,
@@ -29,8 +34,9 @@ struct ProcessSMSIntent: AppIntent {
             receivedAt: Date()
         )
         
-        // Сохраняем в хранилище
-        SMSStorage.shared.addMessage(message)
+        // Сохраняем в Swift Data
+        context.insert(message)
+        try context.save()
         
         // Возвращаем результат с диалогом для пользователя
         return .result(
