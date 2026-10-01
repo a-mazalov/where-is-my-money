@@ -12,8 +12,8 @@ import SwiftData
 struct expensesApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+            TabBarView()
         }
-        .modelContainer(for: SMSMessage.self)
+        .modelContainer(for: [SMSMessage.self, Organization.self])
     }
 }

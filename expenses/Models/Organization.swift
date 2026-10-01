@@ -12,6 +12,7 @@ import SwiftData
 final class Organization {
     @Attribute(.unique) var id: UUID
     var name: String
+    var condition: String
     var categoryRawValue: String
     
     var category: ExpenseCategory {
@@ -19,9 +20,10 @@ final class Organization {
         set { categoryRawValue = newValue.rawValue }
     }
     
-    init(id: UUID = UUID(), name: String, category: ExpenseCategory) {
+    init(id: UUID = UUID(), name: String, condition: String, category: ExpenseCategory) {
         self.id = id
         self.name = name
+        self.condition = condition
         self.categoryRawValue = category.rawValue
     }
 }
