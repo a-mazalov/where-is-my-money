@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SMSMessageRow: View {
     let message: SMSMessage
+
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -29,6 +30,11 @@ struct SMSMessageRow: View {
                         
             // Текст сообщения
             Text(message.text)
+                .font(.body)
+                .foregroundStyle(.secondary)
+                .lineLimit(3)
+            
+            Text(SMSParserService.extractOrganization(from: message.text) ?? "Организация не найдена")
                 .font(.body)
                 .foregroundStyle(.secondary)
                 .lineLimit(3)
