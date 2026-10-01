@@ -13,20 +13,25 @@ struct OrganizationsView: View {
     @Query(sort: \Organization.name) private var organizations: [Organization]
     
     @State private var showingAddOrganization = false
+    @State private var editingOrganization: Organization?
     
     var body: some View {
         NavigationStack {
             List {
                 ForEach(organizations) { organization in
-                    HStack {
-                        Label(organization.name, systemImage: organization.category.icon)
-                            .foregroundStyle(organization.category.color)
-                        
-                        Spacer()
-                        
-                        Text(organization.category.rawValue)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                    Button {
+                        editingOrganization = organization
+                    } label: {
+                        HStack {
+                            Label(organization.name, systemImage: organization.category.icon)
+                                .foregroundStyle(organization.category.color)
+                            
+                            Spacer()
+                            
+                            Text(organization.category.rawValue)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
                     }
                 }
                 .onDelete { indexSet in
@@ -47,6 +52,9 @@ struct OrganizationsView: View {
             }
             .sheet(isPresented: $showingAddOrganization) {
                 AddOrganizationView()
+            }
+            .sheet(item: $editingOrganization) { organization in
+                EditOrganizationView(organization: organization)
             }
             .overlay {
                 if organizations.isEmpty {

@@ -34,6 +34,12 @@ struct SMSMessageRow: View {
                 .foregroundStyle(.secondary)
                 .lineLimit(3)
             
+            Text(SMSParserService.extractAmount(from: message.text).map { "\($0, specifier: "%.2f") BYN" } ?? "Сумма не найдена")
+                .font(.body)
+                .foregroundStyle(.secondary)
+                .lineLimit(3)
+            
+            
             Text(SMSParserService.extractOrganization(from: message.text) ?? "Организация не найдена")
                 .font(.body)
                 .foregroundStyle(.secondary)
