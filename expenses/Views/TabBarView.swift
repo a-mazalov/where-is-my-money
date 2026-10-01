@@ -25,6 +25,11 @@ struct TabBarView: View {
                 .tabItem {
                     Label("Организации", systemImage: "building.2")
                 }
+
+            SettingsView()
+                .tabItem {
+                    Label("Настройки", systemImage: "gearshape")
+                }
         }
     }
 }

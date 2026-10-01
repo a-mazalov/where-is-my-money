@@ -46,8 +46,8 @@ final class SMSProcessingService {
         let descriptor = FetchDescriptor<Organization>()
         let allOrganizations = (try? context.fetch(descriptor)) ?? []
         
-        // Ищем по вхождению условия
-        if let matched = allOrganizations.first(where: { condition.contains($0.condition) }) {
+        // Ищем по точному совпадению условия
+        if let matched = allOrganizations.first(where: { $0.condition == condition }) {
             return matched
         }
         

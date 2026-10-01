@@ -36,7 +36,8 @@ final class SMSParserService {
     /// Поддерживает: "Oplata", "Perevod", "Zachislenie perevoda"
     static func extractAmount(from text: String) -> Double? {
         // Варианты начала операции
-        let operationKeywords = ["Oplata", "Perevod", "Zachislenie perevoda"]
+//        let operationKeywords = ["Oplata", "Perevod", "Zachislenie perevoda"]
+        let operationKeywords = ["Oplata"]
         
         for keyword in operationKeywords {
             guard let keywordRange = text.range(of: keyword, options: .caseInsensitive) else {
