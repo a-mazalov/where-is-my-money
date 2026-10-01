@@ -19,7 +19,10 @@ struct MainView: View {
         NavigationStack {
             Group {
                 if messages.isEmpty {
-                    emptyStateView
+                    EmptyStateView(
+                        onAddManually: { showingAddManually = true },
+                        onShowInstructions: { showingInstructions = true }
+                    )
                 } else {
                     messagesList
                 }
@@ -70,44 +73,6 @@ struct MainView: View {
     }
     
     // MARK: - Views
-    
-    private var emptyStateView: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "message.fill")
-                .font(.system(size: 60))
-                .foregroundStyle(.secondary)
-            
-            Text("Нет сообщений")
-                .font(.title2)
-                .fontWeight(.semibold)
-            
-            Text("Добавьте SMS вручную или настройте автоматизацию в приложении \"Команды\"")
-                .font(.body)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal)
-            
-            VStack(spacing: 12) {
-                Button {
-                    showingAddManually = true
-                } label: {
-                    Label("Добавить вручную", systemImage: "plus.circle.fill")
-                        .font(.headline)
-                }
-                .buttonStyle(.borderedProminent)
-                
-                Button {
-                    showingInstructions = true
-                } label: {
-                    Label("Как настроить автоматизацию", systemImage: "gearshape")
-                        .font(.headline)
-                }
-                .buttonStyle(.bordered)
-            }
-            .padding(.top)
-        }
-        .padding()
-    }
     
     private var messagesList: some View {
         List {
