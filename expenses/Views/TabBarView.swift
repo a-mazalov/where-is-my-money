@@ -11,6 +11,11 @@ import SwiftData
 struct TabBarView: View {
     var body: some View {
         TabView {
+            SMSMonthlyView()
+                .tabItem {
+                    Label("Сводка", systemImage: "calendar")
+                }
+            
             MainView()
                 .tabItem {
                     Label("События", systemImage: "message.fill")
