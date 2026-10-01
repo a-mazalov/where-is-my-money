@@ -23,24 +23,23 @@ struct ProcessSMSIntent: AppIntent {
     
     // Основная функция выполнения Intent
     func perform() async throws -> some IntentResult & ProvidesDialog {
-        // Создаем ModelContainer для Swift Data
-        let container = try ModelContainer(for: SMSMessage.self)
+        // Создаем ModelContainer и context для Swift Data
+        let container = try ModelContainer(for: SMSMessage.self, Organization.self)
         let context = ModelContext(container)
         
-        // Создаем новое сообщение
-        let message = SMSMessage(
+        // Обрабатываем SMS: парсим и привязываем организацию
+        _ = await SMSProcessingService.processSMS(
             text: smsText,
             sender: sender,
-            receivedAt: Date()
+            receivedAt: Date(),
+            context: context
         )
         
-        // Сохраняем в Swift Data
-        context.insert(message)
-        try context.save()
+        // Сохраняем
+        try? context.save()
         
-        // Возвращаем результат с диалогом для пользователя
         return .result(
-            dialog: "✅ SMS сохранено: \(smsText.prefix(50))..."
+            dialog: "✅ SMS обработано"
         )
     }
 }

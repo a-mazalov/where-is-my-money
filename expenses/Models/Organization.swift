@@ -15,8 +15,12 @@ final class Organization {
     var condition: String
     var categoryRawValue: String
     
+    // Обратная связь с сообщениями
+    @Relationship(deleteRule: .nullify, inverse: \SMSMessage.organization)
+    var messages: [SMSMessage]?
+    
     var category: ExpenseCategory {
-        get { ExpenseCategory(rawValue: categoryRawValue) ?? .groceries }
+        get { ExpenseCategory(rawValue: categoryRawValue) ?? .unknown }
         set { categoryRawValue = newValue.rawValue }
     }
     

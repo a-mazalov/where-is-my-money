@@ -47,13 +47,14 @@ struct AddManualSMSView: View {
     }
     
     private func addMessage() {
-        let message = SMSMessage(
+        // Обрабатываем SMS через сервис
+        let message = SMSProcessingService.processSMS(
             text: smsText,
             sender: sender.isEmpty ? "Неизвестно" : sender,
-            receivedAt: Date()
+            receivedAt: Date(),
+            context: modelContext
         )
         
-        modelContext.insert(message)
         dismiss()
     }
 }

@@ -25,7 +25,6 @@ struct SMSMessageRow: View {
                 Text(message.receivedAt, style: .relative)
                     .font(.caption)
                     .foregroundStyle(.secondary)
-                
             }
                         
             // Текст сообщения
@@ -34,20 +33,23 @@ struct SMSMessageRow: View {
                 .foregroundStyle(.secondary)
                 .lineLimit(3)
             
-            Text(SMSParserService.extractAmount(from: message.text).map { "\($0, specifier: "%.2f") BYN" } ?? "Сумма не найдена")
-                .font(.body)
-                .foregroundStyle(.secondary)
-                .lineLimit(3)
-            
-            
-            Text(SMSParserService.extractOrganization(from: message.text) ?? "Организация не найдена")
-                .font(.body)
-                .foregroundStyle(.secondary)
-                .lineLimit(3)
+            // Сумма
+            if let amount = message.amount {
+                Text(String(format: "%.2f BYN", amount))
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.primary)
+            }
             
             HStack {
-                Label(ExpenseCategory.cafe.rawValue, systemImage: ExpenseCategory.cafe.icon)
-                    .foregroundStyle(ExpenseCategory.cafe.color)
+                // Категория и организация
+                if let organization = message.organization {
+                    Label(organization.name, systemImage: organization.category.icon)
+                        .foregroundStyle(organization.category.color)
+                } else {
+                    Label("Неизвестно", systemImage: ExpenseCategory.unknown.icon)
+                        .foregroundStyle(ExpenseCategory.unknown.color)
+                }
                 
                 Spacer()
                 

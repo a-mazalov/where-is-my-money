@@ -16,6 +16,13 @@ final class SMSMessage {
     var sender: String
     var receivedAt: Date
     
+    // Распарсенные данные
+    var amount: Double?
+    var organizationCondition: String?
+    
+    // Связь с организацией
+    var organization: Organization?
+    
     init(id: UUID = UUID(), text: String, sender: String, receivedAt: Date) {
         self.id = id
         self.text = text
