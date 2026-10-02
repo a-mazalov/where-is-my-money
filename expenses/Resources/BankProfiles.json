@@ -1,0 +1,41 @@
+[
+    {
+      "schemaVersion": 1,
+      "bankId": "priorbank_by",
+      "displayName": "Приорбанк",
+      "configVersion": "2026-10-02T12:00:00Z",
+      "senderMatchers": ["Priorbank", "900"],
+
+      "templates": [
+        {
+          "templateId": "purchase",
+          "detect": { "pattern": "Oplata", "options": ["caseInsensitive"] },
+          "fields": {
+            "amount": {
+              "pattern": "Oplata\\s+([\\d.]+)\\s*BYN",
+              "group": 1,
+              "transform": "decimal",
+              "required": true
+            },
+            "currency": {
+              "pattern": "([A-Z]{3})\\b",
+              "group": 1,
+              "required": false
+            },
+            "organization": {
+              "pattern": "(\\b[A-Z]{3}\\b\\s+.+?)\\.",
+              "group": 1,
+              "transform": "trim",
+              "required": true
+            },
+            "balance": {
+              "pattern": "Balans:\\s*([\\d.]+)",
+              "group": 1,
+              "transform": "decimal",
+              "required": false
+            }
+          }
+        }
+      ]
+    }
+]

@@ -127,6 +127,7 @@ struct SettingsView: View {
         do {
             try modelContext.delete(model: SMSMessage.self)
             try modelContext.delete(model: Organization.self)
+            try modelContext.delete(model: SystemOrganization.self)
             try modelContext.save()
             errorMessage = nil
             resultMessage = "Все SMS и организации удалены"

@@ -13,7 +13,8 @@ struct expensesApp: App {
     var body: some Scene {
         WindowGroup {
             TabBarView()
+//                .environment(\.locale, Locale(identifier: "ru_RU"))
         }
-        .modelContainer(for: [SMSMessage.self, Organization.self])
+        .modelContainer(for: [SMSMessage.self, Organization.self, SystemOrganization.self])
     }
 }

@@ -14,6 +14,7 @@ struct MainView: View {
     
     @State private var showingAddManually = false
     @State private var showingInstructions = false
+    @State private var editingOrganization: Organization?
     
     var body: some View {
         NavigationStack {
@@ -63,6 +64,9 @@ struct MainView: View {
             .sheet(isPresented: $showingInstructions) {
                 SetupInstructionsView()
             }
+            .sheet(item: $editingOrganization) { organization in
+                EditOrganizationView(organization: organization)
+            }
         }
     }
     
@@ -77,7 +81,12 @@ struct MainView: View {
     private var messagesList: some View {
         List {
             ForEach(messages) { message in
-                SMSMessageRow(message: message)
+                Button {
+                    editingOrganization = message.organization
+                } label: {
+                    SMSMessageRow(message: message)
+                }
+                .buttonStyle(.plain)
             }
             .onDelete { indexSet in
                 withAnimation {

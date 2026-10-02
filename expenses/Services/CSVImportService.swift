@@ -99,7 +99,7 @@ final class CSVImportService {
 
             guard direction.caseInsensitiveCompare("in") == .orderedSame,
                   !text.isEmpty,
-                  SMSParserService.extractAmount(from: text) != nil else {
+                  SMSProcessingService.canExtractAmount(from: text, sender: sender) else {
                 skipped += 1
                 onProgress?(index + 1, total)
                 continue

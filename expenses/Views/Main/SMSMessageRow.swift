@@ -21,10 +21,6 @@ struct SMSMessageRow: View {
                     .foregroundStyle(.primary)
                 
                 Spacer()
-                
-                Text(message.receivedAt, style: .relative)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
             }
                         
             // Текст сообщения

@@ -9,6 +9,8 @@ import SwiftUI
 import SwiftData
 
 struct TabBarView: View {
+    @Environment(\.modelContext) private var modelContext
+
     var body: some View {
         TabView {
             SMSMonthlyView()
@@ -31,10 +33,13 @@ struct TabBarView: View {
                     Label("Настройки", systemImage: "gearshape")
                 }
         }
+        .task {
+            _ = try? SystemOrganizationSeedService.seedIfNeeded(context: modelContext)
+        }
     }
 }
 
 #Preview {
     TabBarView()
-        .modelContainer(for: [SMSMessage.self, Organization.self], inMemory: true)
+        .modelContainer(for: [SMSMessage.self, Organization.self, SystemOrganization.self], inMemory: true)
 }
